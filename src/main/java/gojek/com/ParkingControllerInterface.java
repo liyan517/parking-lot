@@ -49,8 +49,8 @@ public interface ParkingControllerInterface {
 
     /**
      * get the parking slot number with registration number
-     * @param regNum: registration number
+     * @param regNum : registration number
      * @return: the parking slot numnber
      */
-    int getSlotNumByRegNum(String regNum);
+    String getSlotNumByRegNum(String regNum);
 }

@@ -48,6 +48,11 @@ public class ParkingControllerTest {
 
     @Test
     public void getStatus() {
+        parkingController.createNumOfSlot(2);
+        parkingController.parkSlot("reg1", "white");
+        parkingController.parkSlot("reg2", "white");
+        String statusStr = parkingController.getStatus();
+        System.out.println(statusStr);
     }
 
     @Test
@@ -108,7 +113,7 @@ public class ParkingControllerTest {
         parkingController.createNumOfSlot(2);
         parkingController.parkSlot("reg1", "white");
         parkingController.parkSlot("reg2", "black");
-        int slotNum = parkingController.getSlotNumByRegNum("reg1");
-        assertEquals(1, slotNum);
+        String slotNum = parkingController.getSlotNumByRegNum("reg1");
+        assertEquals("1", slotNum);
     }
 }

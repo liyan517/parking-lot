@@ -73,7 +73,6 @@ public class Main {
      * @param line: input line. contains command and input parameters
      */
     private void processLine(String line) {
-        System.out.println("Processing line: " + line);
         String[] cmdLine = line.split(" ");
         String out;
         switch (cmdLine[0]){
@@ -104,7 +103,7 @@ public class Main {
                     out = Arrays.stream(slotNum).mapToObj(String::valueOf).collect(Collectors.joining(" "));
                 break;
             case SLOT_NUM_WITH_REG_NUM:
-                out = String.valueOf(parkSlot.getSlotNumByRegNum(cmdLine[1]));
+                out = parkSlot.getSlotNumByRegNum(cmdLine[1]);
                 break;
             default:
                 out = "Unknown Command";

@@ -46,4 +46,9 @@ public class SlotRegistry {
     public void setSlotNum(int slotNum) {
         this.slotNum = slotNum;
     }
+
+    @Override
+    public String toString() {
+        return String.join("\t\t\t", String.valueOf(slotNum), regNum, color);
+    }
 }

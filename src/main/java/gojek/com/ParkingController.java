@@ -53,7 +53,11 @@ public class ParkingController implements ParkingControllerInterface{
     }
 
     public String getStatus() {
-        return null;
+        String header = "Slot No.\tRegistration No\tColour" + System.lineSeparator();
+
+        allOccupiedSlot.sort(Comparator.comparingInt(SlotRegistry::getSlotNum));
+        String res = allOccupiedSlot.stream().map(Object::toString).collect(Collectors.joining(System.lineSeparator()));
+        return header + res;
     }
 
     public String parkSlot(String regNum, String color) {
@@ -78,10 +82,14 @@ public class ParkingController implements ParkingControllerInterface{
                 .mapToInt(SlotRegistry::getSlotNum).toArray();
     }
 
-    public int getSlotNumByRegNum(String regNum) {
+    public String getSlotNumByRegNum(String regNum) {
         int[] slotNums = allOccupiedSlot.stream().filter(i -> regNum.equals(i.getRegNum()))
                 .mapToInt(SlotRegistry::getSlotNum).toArray();
         assert slotNums.length < 2 : "Corrupted data: Multiple slot with same registration number";
-        return slotNums[0];
+        if (slotNums.length == 1){
+            return String.valueOf(slotNums[0]);
+        }else {
+            return "Not Found";
+        }
     }
 }
