@@ -1,16 +1,15 @@
-package gojek.com;
+package com.gojek;
 
-import gojek.com.entities.Slot;
-import gojek.com.entities.SlotRegistry;
-import gojek.com.entities.Status;
+import com.gojek.entities.Slot;
+import com.gojek.entities.SlotRegistry;
+import com.gojek.utils.Const;
+import com.gojek.entities.Status;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
-
-import static gojek.com.utils.Const.*;
 
 public class ParkingController implements ParkingControllerInterface{
     List<Slot> curSlot;
@@ -34,7 +33,7 @@ public class ParkingController implements ParkingControllerInterface{
             curSlot.add(newSlot);
             setSlotAvailable(newSlot);
         }
-        return String.format(TEMP_CREATE_SLOT, num);
+        return String.format(Const.TEMP_CREATE_SLOT, num);
     }
 
     public String leaveSlot(int slotNum) {
@@ -46,7 +45,7 @@ public class ParkingController implements ParkingControllerInterface{
             allOccupiedSlot.remove(slotRegistry);
         }
 
-        return String.format(TEMP_LEAVE_SLOT, slotNum);
+        return String.format(Const.TEMP_LEAVE_SLOT, slotNum);
     }
 
     private void setSlotAvailable(Slot slot) {
@@ -55,7 +54,7 @@ public class ParkingController implements ParkingControllerInterface{
     }
 
     public String getStatus() {
-        String header = "Slot No.\tRegistration No\tColour" + System.lineSeparator();
+        String header = "Slot No.    Registration No    Colour" + System.lineSeparator();
 
         allOccupiedSlot.sort(Comparator.comparingInt(SlotRegistry::getSlotNum));
         String res = allOccupiedSlot.stream().map(Object::toString).collect(Collectors.joining(System.lineSeparator()));
@@ -64,13 +63,13 @@ public class ParkingController implements ParkingControllerInterface{
 
     public String parkSlot(String regNum, String color) {
         if (availableSlot.isEmpty()){
-            return MSG_PARK_FULL;
+            return Const.MSG_PARK_FULL;
         } else {
             Slot top = availableSlot.poll();
             top.setStatus(Status.OCCUPIED);
             SlotRegistry registry = new SlotRegistry(regNum, color, top.getSlotNum(), top);
             allOccupiedSlot.add(registry);
-            return String.format(TEMP_ALLOCATE_SLOT, top.getSlotNum());
+            return String.format(Const.TEMP_ALLOCATE_SLOT, top.getSlotNum());
         }
     }
 
@@ -91,7 +90,7 @@ public class ParkingController implements ParkingControllerInterface{
         if (slotNums.length == 1){
             return String.valueOf(slotNums[0]);
         }else {
-            return MSG_NOT_FOUND;
+            return Const.MSG_NOT_FOUND;
         }
     }
 }

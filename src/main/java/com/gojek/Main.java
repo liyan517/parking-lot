@@ -1,4 +1,4 @@
-package gojek.com;
+package com.gojek;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static gojek.com.utils.Const.*;
+import static com.gojek.utils.Const.*;
 
 /**
  * The program implements a ticketing system of a parking lot.
@@ -24,6 +24,7 @@ public class Main {
     private static final String REG_NUM_WITH_COLOR = "registration_numbers_for_cars_with_colour";
     private static final String SLOT_NUM_WITH_COLOR = "slot_numbers_for_cars_with_colour";
     private static final String SLOT_NUM_WITH_REG_NUM = "slot_number_for_registration_number";
+    private static final String EXIT = "exit";
     private ParkingControllerInterface parkSlot;
 
     private Main(){
@@ -105,6 +106,8 @@ public class Main {
             case SLOT_NUM_WITH_REG_NUM:
                 out = parkSlot.getSlotNumByRegNum(cmdLine[1]);
                 break;
+            case EXIT:
+                System.exit(0);
             default:
                 out = MSG_UNKOWN_CMD;
 

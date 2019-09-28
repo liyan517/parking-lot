@@ -1,4 +1,4 @@
-package gojek.com.entities;
+package com.gojek.entities;
 
 public class SlotRegistry {
 
@@ -49,6 +49,6 @@ public class SlotRegistry {
 
     @Override
     public String toString() {
-        return String.join("\t\t\t", String.valueOf(slotNum), regNum, color);
+        return String.valueOf(slotNum) + "           " + regNum + "      " + color;
     }
 }

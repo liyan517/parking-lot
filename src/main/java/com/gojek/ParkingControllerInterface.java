@@ -1,4 +1,4 @@
-package gojek.com;
+package com.gojek;
 
 public interface ParkingControllerInterface {
     /**

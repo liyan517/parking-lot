@@ -1,4 +1,4 @@
-package gojek.com.entities;
+package com.gojek.entities;
 
 public class Slot {
     private int slotNum;

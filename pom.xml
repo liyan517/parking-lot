@@ -25,7 +25,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>gojek.com.Main</mainClass>
+                            <mainClass>com.gojek.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

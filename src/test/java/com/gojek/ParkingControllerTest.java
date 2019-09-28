@@ -1,10 +1,11 @@
-package gojek.com;
+package com.gojek;
 
 
+import com.gojek.utils.Const;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static gojek.com.utils.Const.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -29,7 +30,7 @@ public class ParkingControllerTest {
     public void leaveSlot_leaveAvailableSlot() {
         parkingController.createNumOfSlot(2);
         String out = parkingController.leaveSlot(1);
-        assertEquals(String.format(TEMP_LEAVE_SLOT, 1), out);
+        assertEquals(String.format(Const.TEMP_LEAVE_SLOT, 1), out);
     }
 
     @Test
@@ -38,11 +39,11 @@ public class ParkingControllerTest {
         parkingController.parkSlot("reg1", "white");
         parkingController.parkSlot("reg2", "white");
         String out = parkingController.leaveSlot(1);
-        assertEquals(String.format(TEMP_LEAVE_SLOT, 1), out);
+        assertEquals(String.format(Const.TEMP_LEAVE_SLOT, 1), out);
         String park1 = parkingController.parkSlot("reg3", "black");
-        assertEquals(String.format(TEMP_ALLOCATE_SLOT, 1) ,park1);
+        assertEquals(String.format(Const.TEMP_ALLOCATE_SLOT, 1) ,park1);
         String out2 = parkingController.leaveSlot(2);
-        assertEquals(String.format(TEMP_LEAVE_SLOT, 2), out2);
+        assertEquals(String.format(Const.TEMP_LEAVE_SLOT, 2), out2);
         assertEquals(1, parkingController.availableSlot.size());
         assertEquals(1, parkingController.allOccupiedSlot.size());
     }
@@ -67,7 +68,7 @@ public class ParkingControllerTest {
     @Test
     public void parkSlot_noSlot() {
         String out = parkingController.parkSlot("reg1", "white");
-        assertEquals(MSG_PARK_FULL, out);
+        Assert.assertEquals(Const.MSG_PARK_FULL, out);
     }
 
     @Test
@@ -77,7 +78,7 @@ public class ParkingControllerTest {
         parkingController.createNumOfSlot(2);
         assert parkingController.availableSlot.size() == 3;
         String out = parkingController.parkSlot("reg1", "white");
-        assertEquals(String.format(TEMP_ALLOCATE_SLOT, 2),out);
+        assertEquals(String.format(Const.TEMP_ALLOCATE_SLOT, 2),out);
 
     }
 
