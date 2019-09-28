@@ -4,7 +4,6 @@ import gojek.com.entities.Slot;
 import gojek.com.entities.SlotRegistry;
 import gojek.com.entities.Status;
 
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,13 +30,26 @@ public class ParkingController implements ParkingControllerInterface{
         for (int i = 0; i < num; i++) {
             Slot newSlot = new Slot(++maxNum);
             curSlot.add(newSlot);
-            availableSlot.offer(newSlot);
+            setSlotAvailable(newSlot);
         }
         return String.format("Created a parking lot with %d slots", num);
     }
 
     public String leaveSlot(int slotNum) {
-        return null;
+        List<SlotRegistry> slotRegistries = allOccupiedSlot.stream().filter(i -> i.getSlotNum() == slotNum).collect(Collectors.toList());
+        assert slotRegistries.size() < 2: "Corrupted data: one slot has multiple cars";
+        if(slotRegistries.size() == 1){
+            SlotRegistry slotRegistry = slotRegistries.get(0);
+            setSlotAvailable(slotRegistry.getSlot());
+            allOccupiedSlot.remove(slotRegistry);
+        }
+
+        return String.format("Slot number %d is free", slotNum);
+    }
+
+    private void setSlotAvailable(Slot slot) {
+        slot.setStatus(Status.AVAI);
+        availableSlot.offer(slot);
     }
 
     public String getStatus() {

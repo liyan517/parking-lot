@@ -25,7 +25,25 @@ public class ParkingControllerTest {
     }
 
     @Test
-    public void leaveSlot() {
+    public void leaveSlot_leaveAvailableSlot() {
+        parkingController.createNumOfSlot(2);
+        String out = parkingController.leaveSlot(1);
+        assertEquals("Slot number 1 is free", out);
+    }
+
+    @Test
+    public void leaveSlot_leaveMultipleTimes(){
+        parkingController.createNumOfSlot(2);
+        parkingController.parkSlot("reg1", "white");
+        parkingController.parkSlot("reg2", "white");
+        String out = parkingController.leaveSlot(1);
+        assertEquals("Slot number 1 is free", out);
+        String park1 = parkingController.parkSlot("reg3", "black");
+        assertEquals("Allocated slot number: 1" ,park1);
+        String out2 = parkingController.leaveSlot(2);
+        assertEquals("Slot number 2 is free", out2);
+        assertEquals(1, parkingController.availableSlot.size());
+        assertEquals(1, parkingController.allOccupiedSlot.size());
     }
 
     @Test
