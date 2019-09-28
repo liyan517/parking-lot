@@ -93,14 +93,14 @@ public class Main {
                 if (regNums.length == 0)
                     out = NOT_FOUND;
                 else
-                    out = String.join(" ", regNums);
+                    out = String.join(", ", regNums);
                 break;
             case SLOT_NUM_WITH_COLOR:
                 int[] slotNum = parkSlot.getSlotNumWithColor(cmdLine[1]);
                 if (slotNum.length == 0)
                     out = NOT_FOUND;
                 else
-                    out = Arrays.stream(slotNum).mapToObj(String::valueOf).collect(Collectors.joining(" "));
+                    out = Arrays.stream(slotNum).mapToObj(String::valueOf).collect(Collectors.joining(", "));
                 break;
             case SLOT_NUM_WITH_REG_NUM:
                 out = parkSlot.getSlotNumByRegNum(cmdLine[1]);
