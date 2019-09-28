@@ -6,8 +6,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
+
+import static gojek.com.utils.Const.*;
 
 /**
  * The program implements a ticketing system of a parking lot.
@@ -23,7 +24,6 @@ public class Main {
     private static final String REG_NUM_WITH_COLOR = "registration_numbers_for_cars_with_colour";
     private static final String SLOT_NUM_WITH_COLOR = "slot_numbers_for_cars_with_colour";
     private static final String SLOT_NUM_WITH_REG_NUM = "slot_number_for_registration_number";
-    private static final String NOT_FOUND = "Not Found";
     private ParkingControllerInterface parkSlot;
 
     private Main(){
@@ -91,14 +91,14 @@ public class Main {
             case REG_NUM_WITH_COLOR:
                 String[] regNums = parkSlot.getRegNumWithColor(cmdLine[1]);
                 if (regNums.length == 0)
-                    out = NOT_FOUND;
+                    out = MSG_NOT_FOUND;
                 else
                     out = String.join(", ", regNums);
                 break;
             case SLOT_NUM_WITH_COLOR:
                 int[] slotNum = parkSlot.getSlotNumWithColor(cmdLine[1]);
                 if (slotNum.length == 0)
-                    out = NOT_FOUND;
+                    out = MSG_NOT_FOUND;
                 else
                     out = Arrays.stream(slotNum).mapToObj(String::valueOf).collect(Collectors.joining(", "));
                 break;
@@ -106,7 +106,7 @@ public class Main {
                 out = parkSlot.getSlotNumByRegNum(cmdLine[1]);
                 break;
             default:
-                out = "Unknown Command";
+                out = MSG_UNKOWN_CMD;
 
 
         }

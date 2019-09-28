@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
+import static gojek.com.utils.Const.*;
+
 public class ParkingController implements ParkingControllerInterface{
     List<Slot> curSlot;
     /**
@@ -32,7 +34,7 @@ public class ParkingController implements ParkingControllerInterface{
             curSlot.add(newSlot);
             setSlotAvailable(newSlot);
         }
-        return String.format("Created a parking lot with %d slots", num);
+        return String.format(TEMP_CREATE_SLOT, num);
     }
 
     public String leaveSlot(int slotNum) {
@@ -44,7 +46,7 @@ public class ParkingController implements ParkingControllerInterface{
             allOccupiedSlot.remove(slotRegistry);
         }
 
-        return String.format("Slot number %d is free", slotNum);
+        return String.format(TEMP_LEAVE_SLOT, slotNum);
     }
 
     private void setSlotAvailable(Slot slot) {
@@ -62,13 +64,13 @@ public class ParkingController implements ParkingControllerInterface{
 
     public String parkSlot(String regNum, String color) {
         if (availableSlot.isEmpty()){
-            return "Sorry, parking lot is full";
+            return MSG_PARK_FULL;
         } else {
             Slot top = availableSlot.poll();
             top.setStatus(Status.OCCUPIED);
             SlotRegistry registry = new SlotRegistry(regNum, color, top.getSlotNum(), top);
             allOccupiedSlot.add(registry);
-            return String.format("Allocated slot number: %d", top.getSlotNum());
+            return String.format(TEMP_ALLOCATE_SLOT, top.getSlotNum());
         }
     }
 
@@ -89,7 +91,7 @@ public class ParkingController implements ParkingControllerInterface{
         if (slotNums.length == 1){
             return String.valueOf(slotNums[0]);
         }else {
-            return "Not Found";
+            return MSG_NOT_FOUND;
         }
     }
 }
