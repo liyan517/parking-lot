@@ -77,7 +77,7 @@ public class ParkingControllerTest {
         parkingController.parkSlot("reg1", "white");
         parkingController.createNumOfSlot(2);
         assert parkingController.availableSlot.size() == 3;
-        String out = parkingController.parkSlot("reg1", "white");
+        String out = parkingController.parkSlot("reg2", "white");
         assertEquals(String.format(Const.TEMP_ALLOCATE_SLOT, 2),out);
 
     }

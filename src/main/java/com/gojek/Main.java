@@ -1,5 +1,7 @@
 package com.gojek;
 
+import sun.jvm.hotspot.utilities.Assert;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -55,7 +57,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()){
             String line = scanner.nextLine();
-            processLine(line);
+            try {
+                processLine(line);
+            }catch (IllegalArgumentException ex){
+                System.out.println("Invalid Input: " + ex.getMessage());
+            }
         }
     }
 
@@ -69,6 +75,11 @@ public class Main {
         lines.forEach(this::processLine);
     }
 
+    private void validateSize(int size, String[] cmds){
+        if (cmds.length != size)
+            throw new IllegalArgumentException(String.format("Command size should be %d", size));
+    }
+
     /**
      * Process each line of command string and print out the output
      * @param line: input line. contains command and input parameters
@@ -78,18 +89,22 @@ public class Main {
         String out;
         switch (cmdLine[0]){
             case CREATE_SLOT:
+                validateSize(2, cmdLine);
                 out = parkSlot.createNumOfSlot(Integer.parseInt(cmdLine[1]));
                 break;
             case PARK:
+                validateSize(3, cmdLine);
                 out = parkSlot.parkSlot(cmdLine[1], cmdLine[2]);
                 break;
             case LEAVE:
+                validateSize(2, cmdLine);
                 out = parkSlot.leaveSlot(Integer.parseInt(cmdLine[1]));
                 break;
             case STATUS:
                 out = parkSlot.getStatus();
                 break;
             case REG_NUM_WITH_COLOR:
+                validateSize(2, cmdLine);
                 String[] regNums = parkSlot.getRegNumWithColor(cmdLine[1]);
                 if (regNums.length == 0)
                     out = MSG_NOT_FOUND;
@@ -97,6 +112,7 @@ public class Main {
                     out = String.join(", ", regNums);
                 break;
             case SLOT_NUM_WITH_COLOR:
+                validateSize(2, cmdLine);
                 int[] slotNum = parkSlot.getSlotNumWithColor(cmdLine[1]);
                 if (slotNum.length == 0)
                     out = MSG_NOT_FOUND;
@@ -104,6 +120,7 @@ public class Main {
                     out = Arrays.stream(slotNum).mapToObj(String::valueOf).collect(Collectors.joining(", "));
                 break;
             case SLOT_NUM_WITH_REG_NUM:
+                validateSize(2, cmdLine);
                 out = parkSlot.getSlotNumByRegNum(cmdLine[1]);
                 break;
             case EXIT:

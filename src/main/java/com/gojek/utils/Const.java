@@ -7,4 +7,5 @@ public class Const {
     public static final String MSG_PARK_FULL = "Sorry, parking lot is full";
     public static final String MSG_NOT_FOUND = "Not found";
     public static final String MSG_UNKOWN_CMD = "Unknown Command";
+    public static final String TEMP_REGNUM_EXIST = "Registration Number %s already exist";
 }
