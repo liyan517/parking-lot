@@ -4,7 +4,6 @@ import com.gojek.entities.Slot;
 import com.gojek.entities.SlotRegistry;
 import com.gojek.utils.Const;
 import com.gojek.entities.Status;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,8 +56,10 @@ public class ParkingController implements ParkingControllerInterface{
         // get the current registration information with slot number
         List<SlotRegistry> slotRegistries = allOccupiedSlot.stream()
                 .filter(i -> i.getSlotNum() == slotNum).collect(Collectors.toList());
-        Assert.that(slotRegistries.size() < 2, "Corrupted data: one slot has multiple cars");
-        if(slotRegistries.size() == 1){
+        if (slotRegistries.size() > 1){
+            throw new IllegalStateException("Corrupted data: one slot has multiple cars");
+        }
+        else if(slotRegistries.size() == 1){
             //free the slot
             SlotRegistry slotRegistry = slotRegistries.get(0);
             setSlotAvailable(slotRegistry.getSlot());
@@ -136,8 +137,10 @@ public class ParkingController implements ParkingControllerInterface{
     public String getSlotNumByRegNum(String regNum) {
         int[] slotNums = allOccupiedSlot.stream().filter(i -> regNum.equals(i.getRegNum()))
                 .mapToInt(SlotRegistry::getSlotNum).toArray();
-        Assert.that(slotNums.length < 2, "Corrupted data: Multiple slot with same registration number");
-        if (slotNums.length == 1){
+        if (slotNums.length > 2){
+            throw new IllegalStateException("Corrupted data: Multiple slot with same registration number");
+        }
+        else if (slotNums.length == 1){
             return String.valueOf(slotNums[0]);
         }else {
             return Const.MSG_NOT_FOUND;
